@@ -7,7 +7,7 @@ namespace ngram {
 
 Config::Config() :
   show_progress(true),
-  messages(&std::cerr),
+  messages(NULL),
   enumerate_vocab(NULL),
   unknown_missing(COMPLAIN),
   sentence_marker_missing(THROW_UP),
