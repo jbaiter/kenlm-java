@@ -1,38 +1,79 @@
 package com.github.jbaiter.kenlm;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URL;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
 public class ModelTest {
-  private URL toy0Url = getClass().getResource("/toy0.arpa");
-  private URL toy1Url = getClass().getResource("/toy0.arpa");
+  private Model model;
+
+  @Before
+  public void setUp() throws Exception {
+    this.model = new Model(getClass().getResource("/test.arpa").getPath());
+  }
+
+  @Test
+  public void testLoadArpa() {
+    assertNotNull(this.model);
+  }
+
+  @Test
+  public void testLoadProbing() throws Exception {
+    Model model = new Model(getClass().getResource("/test_probing.mmap").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
+
+  @Test
+  public void testLoadTrie() throws Exception {
+    Model model = new Model(getClass().getResource("/test_trie.mmap").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
+
+  @Test
+  public void testLoadArrayTrie() throws Exception {
+    Model model = new Model(getClass().getResource("/test_array_trie.mmap").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
+
+  @Test
+  public void testLoadQuantTrie() throws Exception {
+    Model model = new Model(getClass().getResource("/test_quant_trie.mmap").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
+
+  @Test
+  public void testLoadQuantArrayTrie() throws Exception {
+    Model model = new Model(getClass().getResource("/test_quant_array_trie.mmap").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
 
   @Test
   public void getOrder() throws Exception {
-    Model model = new Model(toy0Url.getPath());
-    assertEquals(model.getOrder(), 3);
+    assertEquals(model.getOrder(), 5);
   }
 
   @Test
   public void score() throws Exception {
-
-  }
-
-  @Test
-  public void score1() throws Exception {
-
+    assertEquals(-6.4675869, model.score("a little more"), 1e-6);
+    assertTrue(model.score("a little more") > model.score("probably not known"));
   }
 
   @Test
   public void fullScores() throws Exception {
+    Collection<FullScoreReturn> scores = model.fullScores("looking a little beyond");
+    assertEquals(scores.size(), 5);
+    assertTrue(scores.stream().allMatch(fs -> !fs.isOov()));
 
-  }
-
-  @Test
-  public void fullScores1() throws Exception {
-
+    scores = model.fullScores("some g4rb4ge words");
+    assertEquals(scores.stream().filter(fs -> fs.isOov()).count(), 3);
   }
 }
