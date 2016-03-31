@@ -39,12 +39,24 @@ public class Model {
   }
 
   public double score(String sentence) {
-    return score(sentence.split(" "));
+    return score(sentence, true, true);
+  }
+
+  public double score(String sentence, boolean useBOS, boolean useEOS) {
+    return score(sentence.split(" "), useBOS, useEOS);
   }
 
   public double score(String[] sentence) {
+    return score(sentence, true, true);
+  }
+
+  public double score(String[] sentence, boolean useBOS, boolean useEOS) {
     State state = new State();
-    this.cModel.BeginSentenceWrite(new SWIGTYPE_p_void(State.getCPtr(state), true));
+    if (useBOS) {
+      this.cModel.BeginSentenceWrite(new SWIGTYPE_p_void(State.getCPtr(state), true));
+    } else {
+      this.cModel.NullContextWrite(new SWIGTYPE_p_void(State.getCPtr(state), true));
+    }
     State outState = new State();
     double total = 0.0;
     for (String word : sentence) {
@@ -52,9 +64,11 @@ public class Model {
                                      this.vocabulary.Index(word),
                                      new SWIGTYPE_p_void(State.getCPtr(outState), true));
     }
-    total += this.cModel.BaseScore(new SWIGTYPE_p_void(State.getCPtr(state), true),
-                                   this.vocabulary.EndSentence(),
-                                   new SWIGTYPE_p_void(State.getCPtr(outState), true));
+    if (useEOS) {
+      total += this.cModel.BaseScore(new SWIGTYPE_p_void(State.getCPtr(state), true),
+                                     this.vocabulary.EndSentence(),
+                                     new SWIGTYPE_p_void(State.getCPtr(outState), true));
+    }
     return total;
   }
 
@@ -62,10 +76,22 @@ public class Model {
     return this.fullScores(sentence.split(" "));
   }
 
+  public Collection<FullScoreReturn> fullScores(String sentence, boolean useBOS, boolean useEOS) {
+    return this.fullScores(sentence.split(" "),  useBOS, useEOS);
+  }
+
   public Collection<FullScoreReturn> fullScores(String[] sentence) {
+    return this.fullScores(sentence, true, true);
+  }
+
+  public Collection<FullScoreReturn> fullScores(String[] sentence, boolean useBOS, boolean useEOS) {
     ArrayList<FullScoreReturn> scores = new ArrayList<>();
     State state = new State();
-    this.cModel.BeginSentenceWrite(new SWIGTYPE_p_void(State.getCPtr(state), true));
+    if (useBOS) {
+      this.cModel.BeginSentenceWrite(new SWIGTYPE_p_void(State.getCPtr(state), true));
+    } else {
+      this.cModel.NullContextWrite(new SWIGTYPE_p_void(State.getCPtr(state), true));
+    }
     State outState = new State();
     com.github.jbaiter.kenlm.jni.FullScoreReturn ret;
     long wordIdx;
@@ -76,10 +102,12 @@ public class Model {
                                       new SWIGTYPE_p_void(State.getCPtr(outState), true));
       scores.add(new FullScoreReturn(ret.getProb(), ret.getNgram_length(), wordIdx == 0));
     }
-    ret = this.cModel.BaseFullScore(new SWIGTYPE_p_void(State.getCPtr(state), true),
-                                    this.vocabulary.EndSentence(),
-                                    new SWIGTYPE_p_void(State.getCPtr(outState), true));
-    scores.add(new FullScoreReturn(ret.getProb(), ret.getNgram_length(), false));
+    if (useEOS) {
+      ret = this.cModel.BaseFullScore(new SWIGTYPE_p_void(State.getCPtr(state), true),
+                                      this.vocabulary.EndSentence(),
+                                      new SWIGTYPE_p_void(State.getCPtr(outState), true));
+      scores.add(new FullScoreReturn(ret.getProb(), ret.getNgram_length(), false));
+    }
     return scores;
   }
 }
