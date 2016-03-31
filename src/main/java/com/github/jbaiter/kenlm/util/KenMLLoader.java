@@ -375,7 +375,7 @@ public class KenMLLoader {
         }
       }
 
-      return new File(targetFolder, nativeLibraryFilePath);
+      return extractedLibFile;
     } catch (IOException e) {
       e.printStackTrace();
       return null;
