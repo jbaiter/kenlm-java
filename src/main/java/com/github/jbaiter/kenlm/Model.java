@@ -21,14 +21,16 @@ public class Model {
   private com.github.jbaiter.kenlm.jni.Model cModel;
   private String path;
   private Vocabulary vocabulary;
+  private Config config;
 
   public Model(String path) throws ModelException {
-    new Model(path, new Config());
+    this(path, new Config());
   }
 
   public Model(String path, Config config) throws ModelException {
+    this.config = config;
     this.path = path;
-    this.cModel = KenLM.LoadVirtual(path, config.getCConfig());
+    this.cModel = KenLM.LoadVirtual(path, this.config.getCConfig());
     this.vocabulary = this.cModel.BaseVocabulary();
   }
 

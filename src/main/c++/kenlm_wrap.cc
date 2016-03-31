@@ -224,6 +224,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_JavaThrowException(jenv, SWIG_JavaIllegalArgumentException, msg); return nullreturn; } else
 
 
+#include <iostream>
 #include <string>
 #include "lm/word_index.hh"
 #include "lm/return.hh"
@@ -232,6 +233,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include "util/mmap.hh"
 #include "lm/config.hh"
 #include "lm/model.hh"
+#include "lm/binary_format.hh"
 #include "util/exception.hh"
 
 
@@ -692,6 +694,34 @@ SWIGEXPORT jlong JNICALL Java_com_github_jbaiter_kenlm_jni_KenLMJNI_Config_1buil
   arg1 = *(lm::ngram::Config **)&jarg1; 
   result = (size_t) ((arg1)->building_memory);
   jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_github_jbaiter_kenlm_jni_KenLMJNI_Config_1messages_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  lm::ngram::Config *arg1 = (lm::ngram::Config *) 0 ;
+  std::ostream *arg2 = (std::ostream *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(lm::ngram::Config **)&jarg1; 
+  arg2 = *(std::ostream **)&jarg2; 
+  if (arg1) (arg1)->messages = arg2;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_github_jbaiter_kenlm_jni_KenLMJNI_Config_1messages_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  lm::ngram::Config *arg1 = (lm::ngram::Config *) 0 ;
+  std::ostream *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(lm::ngram::Config **)&jarg1; 
+  result = (std::ostream *) ((arg1)->messages);
+  *(std::ostream **)&jresult = result; 
   return jresult;
 }
 

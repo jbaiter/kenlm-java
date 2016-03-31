@@ -39,6 +39,8 @@ public class KenLMJNI {
   public final static native float Config_probing_multiplier_get(long jarg1, Config jarg1_);
   public final static native void Config_building_memory_set(long jarg1, Config jarg1_, long jarg2);
   public final static native long Config_building_memory_get(long jarg1, Config jarg1_);
+  public final static native void Config_messages_set(long jarg1, Config jarg1_, long jarg2);
+  public final static native long Config_messages_get(long jarg1, Config jarg1_);
   public final static native void Config_temporary_directory_prefix_set(long jarg1, Config jarg1_, String jarg2);
   public final static native String Config_temporary_directory_prefix_get(long jarg1, Config jarg1_);
   public final static native void Config_load_method_set(long jarg1, Config jarg1_, int jarg2);

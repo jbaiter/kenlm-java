@@ -15,12 +15,12 @@ public class KenLM {
 
   public static Model LoadVirtual(String file_name, Config config) throws com.github.jbaiter.kenlm.ModelException {
     long cPtr = KenLMJNI.LoadVirtual__SWIG_0(file_name, Config.getCPtr(config), config);
-    return (cPtr == 0) ? null : new Model(cPtr, false);
+    return (cPtr == 0) ? null : new Model(cPtr, true);
   }
 
   public static Model LoadVirtual(String file_name) throws com.github.jbaiter.kenlm.ModelException {
     long cPtr = KenLMJNI.LoadVirtual__SWIG_1(file_name);
-    return (cPtr == 0) ? null : new Model(cPtr, false);
+    return (cPtr == 0) ? null : new Model(cPtr, true);
   }
 
 }

@@ -67,6 +67,15 @@ public class Config {
     return KenLMJNI.Config_building_memory_get(swigCPtr, this);
   }
 
+  public void setMessages(SWIGTYPE_p_std__ostream value) {
+    KenLMJNI.Config_messages_set(swigCPtr, this, SWIGTYPE_p_std__ostream.getCPtr(value));
+  }
+
+  public SWIGTYPE_p_std__ostream getMessages() {
+    long cPtr = KenLMJNI.Config_messages_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SWIGTYPE_p_std__ostream(cPtr, false);
+  }
+
   public void setTemporary_directory_prefix(String value) {
     KenLMJNI.Config_temporary_directory_prefix_set(swigCPtr, this, value);
   }

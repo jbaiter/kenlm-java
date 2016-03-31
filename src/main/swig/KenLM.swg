@@ -1,5 +1,6 @@
 %module KenLM
 %{
+#include <iostream>
 #include <string>
 #include "lm/word_index.hh"
 #include "lm/return.hh"
@@ -8,6 +9,7 @@
 #include "util/mmap.hh"
 #include "lm/config.hh"
 #include "lm/model.hh"
+#include "lm/binary_format.hh"
 #include "util/exception.hh"
 %}
 
@@ -75,6 +77,7 @@ namespace lm::ngram {
         float unknown_missing_logprob;
         float probing_multiplier;
         size_t  building_memory;
+        std::ostream *messages;
         std::string temporary_directory_prefix;
         util::LoadMethod load_method;
     };
@@ -88,5 +91,7 @@ namespace lm::ngram {
             return $null;
         }
     }
-    lm::base::Model* LoadVirtual(const char *file_name, const lm::ngram::Config &config = lm::ngram::Config());
+    %newobject LoadVirtual;
+    lm::base::Model* LoadVirtual(const char *file_name,
+                                 const lm::ngram::Config &config = lm::ngram::Config());
 };
