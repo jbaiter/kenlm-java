@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+
 ARCH=$(uname -m |sed -e 's/x86_64/amd64/g')
 OS=$(uname -o |sed -e 's/GNU\/Linux/Linux/g')
 JNIPATH="./src/main/java/com/github/jbaiter/kenlm/jni"
@@ -15,7 +17,7 @@ swig -c++ -java -Wall -package com.github.jbaiter.kenlm.jni \
 
 echo Compiling source files
 
-rm $SRCPATH/{lm,util}/*.o 2>/dev/null
+rm -f $SRCPATH/{lm,util}/*.o
 
 CXXFLAGS="-I. -O3 -DNDEBUG -DHAVE_ZLIB -DHAVE_BZLIB -DHAVE_XZLIB -DKENLM_MAX_ORDER=6 -fPIC $CXXFLAGS"
 
