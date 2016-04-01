@@ -834,6 +834,22 @@ SWIGEXPORT jlong JNICALL Java_com_github_jbaiter_kenlm_jni_KenLMJNI_LoadVirtual_
   {
     try {
       result = (lm::base::Model *)lm::ngram::LoadVirtual((char const *)arg1,(lm::ngram::Config const &)*arg2);
+    } catch (lm::ConfigException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/ConfigException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
+    } catch (lm::FormatLoadException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/FormatLoadException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
+    } catch (lm::VocabLoadException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/VocabLoadException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
+    } catch (lm::LoadException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/LoadException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
     } catch (util::Exception &e) {
       jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/ModelException");
       jenv->ThrowNew(clazz, e.what());
@@ -861,6 +877,22 @@ SWIGEXPORT jlong JNICALL Java_com_github_jbaiter_kenlm_jni_KenLMJNI_LoadVirtual_
   {
     try {
       result = (lm::base::Model *)lm::ngram::LoadVirtual((char const *)arg1);
+    } catch (lm::ConfigException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/ConfigException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
+    } catch (lm::FormatLoadException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/FormatLoadException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
+    } catch (lm::VocabLoadException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/VocabLoadException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
+    } catch (lm::LoadException &e) {
+      jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/LoadException");
+      jenv->ThrowNew(clazz, e.what());
+      return 0;
     } catch (util::Exception &e) {
       jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/ModelException");
       jenv->ThrowNew(clazz, e.what());

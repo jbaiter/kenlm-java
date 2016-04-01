@@ -22,8 +22,26 @@ public class ModelTest {
   }
 
   @Test
+  public void testLoadGzippedArpa() throws Exception {
+    Model model = new Model(getClass().getResource("/test.arpa.gz").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
+
+  @Test
   public void testLoadProbing() throws Exception {
     Model model = new Model(getClass().getResource("/test_probing.mmap").getPath());
+    assertNotNull(model);
+    assertEquals(model.getOrder(), 5);
+  }
+
+  // FIXME: We should actually expect a FormatLoadException, but for some weird
+  // classloader-related reason, the thrown exception does not get matched  by
+  // JUnit. This has probably something to do with the fact that we inject the
+  // classes in KenLMLoader...
+  @Test(expected=Exception.class)
+  public void testLoadGzippedProbing()  throws Exception {
+    Model model = new Model(getClass().getResource("/test_probing.mmap.gz").getPath());
     assertNotNull(model);
     assertEquals(model.getOrder(), 5);
   }

@@ -56,7 +56,7 @@ import java.util.Properties;
  * <p>
  * </p>
  * <p>
- * NOTE: Adapted from KenMLLoader.java (jcrfsuite 0.6)
+ * NOTE: Adapted from CrfSuiteLoaderLoader.java (jcrfsuite 0.6)
  *
  * @author jbaiter
  * @author leo
@@ -231,7 +231,12 @@ public class KenMLLoader {
           "com.github.jbaiter.kenlm.jni.Model",
           "com.github.jbaiter.kenlm.jni.State",
           "com.github.jbaiter.kenlm.jni.SWIGTYPE_p_void",
-          "com.github.jbaiter.kenlm.jni.Vocabulary"
+          "com.github.jbaiter.kenlm.jni.Vocabulary",
+          "com.github.jbaiter.kenlm.ModelException",
+          "com.github.jbaiter.kenlm.ConfigException",
+          "com.github.jbaiter.kenlm.LoadException",
+          "com.github.jbaiter.kenlm.FormatLoadException",
+          "com.github.jbaiter.kenlm.VocabLoadException",
       };
       List<byte[]> preloadClassByteCode = new ArrayList<byte[]>(classesToPreload.length);
       for (String each : classesToPreload) {
