@@ -85,6 +85,22 @@ namespace lm::ngram {
     %javaexception("com.github.jbaiter.kenlm.ModelException") LoadVirtual {
         try {
             $action
+        } catch (lm::ConfigException &e) {
+            jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/ConfigException");
+            jenv->ThrowNew(clazz, e.what());
+            return $null;
+        } catch (lm::FormatLoadException &e) {
+            jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/FormatLoadException");
+            jenv->ThrowNew(clazz, e.what());
+            return $null;
+        } catch (lm::VocabLoadException &e) {
+            jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/VocabLoadException");
+            jenv->ThrowNew(clazz, e.what());
+            return $null;
+        } catch (lm::LoadException &e) {
+            jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/LoadException");
+            jenv->ThrowNew(clazz, e.what());
+            return $null;
         } catch (util::Exception &e) {
             jclass clazz = jenv->FindClass("com/github/jbaiter/kenlm/ModelException");
             jenv->ThrowNew(clazz, e.what());
