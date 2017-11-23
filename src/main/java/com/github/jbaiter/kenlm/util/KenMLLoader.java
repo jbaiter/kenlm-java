@@ -411,6 +411,9 @@ public class KenMLLoader {
       File nativeLib = new File(kenlmNativeLibraryPath, kenlmNativeLibraryName);
       if (nativeLib.exists())
         return nativeLib;
+      nativeLib = new File(kenlmNativeLibraryPath, System.mapLibraryName(kenlmNativeLibraryName));
+      if (nativeLib.exists())
+        return nativeLib;
     }
 
     // Load an OS-dependent native library inside a jar file
