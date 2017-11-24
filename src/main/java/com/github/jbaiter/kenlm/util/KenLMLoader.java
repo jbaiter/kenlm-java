@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -28,7 +27,7 @@ import java.util.Properties;
  * In default, no configuration is required to use libkenlm, but you can load
  * your own native library created by 'make native' command.
  * <p>
- * This KenMLLoader searches for native libraries (libkenlm.dll,
+ * This KenLMLoader searches for native libraries (libkenlm.dll,
  * libkenlm.so, etc.) in the following order:
  * <ol>
  * <li>If system property <i>com.github.jbaiter.kenlm.use.systemlib</i> is set to true,
@@ -62,7 +61,7 @@ import java.util.Properties;
  * @author leo
  * @author Vinh Khuc
  */
-public class KenMLLoader {
+public class KenLMLoader {
 
   public static final String KENLM_SYSTEM_PROPERTIES_FILE = "com-github-jbaiter-kenlm.properties";
   public static final String KEY_KENLM_LIB_PATH = "com.github.jbaiter.kenlm.lib.path";
@@ -119,7 +118,7 @@ public class KenMLLoader {
 
   private static byte[] getByteCode(String resourcePath) throws IOException {
 
-    InputStream in = KenMLLoader.class.getResourceAsStream(resourcePath);
+    InputStream in = KenLMLoader.class.getResourceAsStream(resourcePath);
     if (in == null)
       throw new IOException(resourcePath + " is not found");
     byte[] buf = new byte[1024];
@@ -188,7 +187,7 @@ public class KenMLLoader {
     if (!isLoaded) {
       try {
         if (!hasInjectedNativeLoader()) {
-          // Inject CrfSuiteNativeLoader (native_loader.KenMLLoader.bytecode) to the root class loader
+          // Inject CrfSuiteNativeLoader (native_loader.KenLMLoader.bytecode) to the root class loader
           Class<?> nativeLoader = injectKenLMNativeLoader();
           // Load the JNI code using the injected loader
           loadNativeLibrary(nativeLoader);
@@ -196,7 +195,7 @@ public class KenMLLoader {
 
         // Look up CrfSuiteNative, injected to the root classloader, using reflection in order
         // to avoid the initialization of CrfSuiteNative class in this context class loader.
-        Class.forName("com.github.jbaiter.kenlm.util.KenMLLoader");
+        Class.forName("com.github.jbaiter.kenlm.util.KenLMLoader");
 
         isLoaded = true;
       } catch (Exception e) {
@@ -343,7 +342,7 @@ public class KenMLLoader {
     try {
       if (extractedLibFile.exists()) {
         // test md5sum value
-        String md5sum1 = md5sum(KenMLLoader.class.getResourceAsStream(nativeLibraryFilePath));
+        String md5sum1 = md5sum(KenLMLoader.class.getResourceAsStream(nativeLibraryFilePath));
         String md5sum2 = md5sum(new FileInputStream(extractedLibFile));
 
         if (md5sum1.equals(md5sum2)) {
@@ -360,7 +359,7 @@ public class KenMLLoader {
       }
 
       // Extract a native library file into the target directory
-      InputStream reader = KenMLLoader.class.getResourceAsStream(nativeLibraryFilePath);
+      InputStream reader = KenLMLoader.class.getResourceAsStream(nativeLibraryFilePath);
       FileOutputStream writer = new FileOutputStream(extractedLibFile);
       byte[] buffer = new byte[8192];
       int bytesRead = 0;
@@ -419,7 +418,7 @@ public class KenMLLoader {
     // Load an OS-dependent native library inside a jar file
     kenlmNativeLibraryPath = "/lib/" + OSInfo.getNativeLibFolderPathForCurrentOS();
 
-    if (KenMLLoader.class.getResource(kenlmNativeLibraryPath + "/" + kenlmNativeLibraryName) != null) {
+    if (KenLMLoader.class.getResource(kenlmNativeLibraryPath + "/" + kenlmNativeLibraryName) != null) {
       // Temporary library folder. Use the value of com.github.jbaiter.kenlm.tempdir or java.io.tmpdir
       String tempFolder = new File(System.getProperty(KEY_KENLM_TEMPDIR,
           System.getProperty("java.io.tmpdir"))).getAbsolutePath();
