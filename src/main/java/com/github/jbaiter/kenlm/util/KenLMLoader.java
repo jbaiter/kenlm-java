@@ -137,7 +137,7 @@ public class KenLMLoader {
 
   private static boolean hasInjectedNativeLoader() {
     try {
-      final String nativeLoaderClassName = "native_loader.CrfSuiteNativeLoader";
+      final String nativeLoaderClassName = "native_loader.KenLMNativeLoader";
       Class.forName(nativeLoaderClassName);
       // If this native loader class is already defined, it means that another class loader already loaded the native library of kenlm
       return true;
