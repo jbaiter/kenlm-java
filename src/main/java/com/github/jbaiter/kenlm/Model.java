@@ -4,7 +4,7 @@ import com.github.jbaiter.kenlm.jni.KenLM;
 import com.github.jbaiter.kenlm.jni.SWIGTYPE_p_void;
 import com.github.jbaiter.kenlm.jni.State;
 import com.github.jbaiter.kenlm.jni.Vocabulary;
-import com.github.jbaiter.kenlm.util.KenMLLoader;
+import com.github.jbaiter.kenlm.util.KenLMLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.Collection;
 public class Model {
   static {
     try {
-      KenMLLoader.load();
+      KenLMLoader.load();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
