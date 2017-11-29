@@ -34,6 +34,10 @@ public class Model {
     this.vocabulary = this.cModel.BaseVocabulary();
   }
 
+  public boolean knows(final String word) {
+      return vocabulary.Index(word) > 0;
+  }
+
   public long getOrder() {
     return this.cModel.Order();
   }
