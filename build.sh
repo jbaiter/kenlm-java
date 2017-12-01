@@ -9,6 +9,13 @@ swig -c++ -java -Wall -package com.github.jbaiter.kenlm.jni \
 
 CXXFLAGS="-I. -O3 -DNDEBUG -DHAVE_BZLIB -DKENLM_MAX_ORDER=6 -fPIC $CXXFLAGS"
 
-g++ $CXXFLAGS ./kenlm_wrap.cc \
-    $objects -ldl -shared -lkenlm -lkenlm_util \
-    -Wno-deprecated -pthread -o libkenlm-jni.so
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    g++ $CXXFLAGS ./kenlm_wrap.cc \
+        -dynamiclib \
+        $objects -ldl -shared -lkenlm -lkenlm_util \
+        -Wno-deprecated -pthread -o libkenlm-jni.dylib
+else
+    g++ $CXXFLAGS ./kenlm_wrap.cc \
+        $objects -ldl -shared -lkenlm -lkenlm_util \
+        -Wno-deprecated -pthread -o libkenlm-jni.so
+fi
