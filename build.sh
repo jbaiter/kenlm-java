@@ -4,6 +4,8 @@ set -e
 JNIPATH="./src/main/java/com/github/jbaiter/kenlm/jni"
 SWIGPATH="./src/main/swig/KenLM.swg"
 
+mkdir -p $JNIPATH
+
 swig -c++ -java -Wall -package com.github.jbaiter.kenlm.jni \
      -outdir $JNIPATH -o kenlm_wrap.cc $SWIGPATH
 
