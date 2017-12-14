@@ -1,15 +1,16 @@
-requires:
-    jdk
-    swig
-    g++
-    kenlm
+To build this project you need the following prerequisites:
+* jdk
+* swig v3+
+* g++
+* kenlm
 
-required to set:
-LIBRARY_PATH to have libkenlm and libkenlm_util
-CPATH to point to kenlm source, JAVA_HOME/include and JAVA_HOME/include/<arch>
+the order to build this project is:
+1. run ./build.sh. This will generate the required Java JNI classes and the C++ interface using swig.
+2. put the output libkenlm-jni into your java library path (optinal for running the tests in phase 3)
+3. run mvn package
 
-run build.sh to create libkenlm-jni.so/libkenlm-jni.dylib
-put this into you java.library.path
+The following system environment variables need to be set when running build:
+* LIBRARY_PATH to have libkenlm and libkenlm_util
+* CPATH to point to kenlm source, JAVA_HOME/include and JAVA_HOME/include/<arch>
 
-library can be renamed by creating and moved if you dont have access to java.library.path using com-github-jbaiter-kenlm.properties
-example can be found in test resources
+The library can be renamed. If that is the case com-github-jbaiter-kenlm.properties needs to be provided pointing directly to the file. An example can be found in test resources. If the properties are not set the library is loaded from java.library.path.
