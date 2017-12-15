@@ -81,7 +81,7 @@ public class ModelTest {
 
   @Test
   public void score() throws Exception {
-    assertEquals(-6.4675869, model.score("a little more"), 1e-6);
+    assertEquals(-3.6763625, model.score("a little more"), 1e-6);
     assertTrue(model.score("a little more") > model.score("probably not known"));
   }
 
