@@ -26,20 +26,17 @@ package com.github.jbaiter.kenlm.util;
 
 /**
  * Provides OS name and architecture name.
- * 
+ *
  * @author leo
- * 
  * @author vinhkhuc Adapted from OSInfo.java of snappy-java-1.0.4.1
  */
-public class OSInfo
-{
+public class OSInfo {
     public static void main(String[] args) {
         if (args.length >= 1) {
             if ("--os".equals(args[0])) {
                 System.out.print(getOSName());
                 return;
-            }
-            else if ("--arch".equals(args[0])) {
+            } else if ("--arch".equals(args[0])) {
                 System.out.print(getArchName());
                 return;
             }
@@ -63,14 +60,11 @@ public class OSInfo
     public static String translateOSNameToFolderName(String osName) {
         if (osName.contains("Windows")) {
             return "Windows";
-        }
-        else if (osName.contains("Mac")) {
+        } else if (osName.contains("Mac")) {
             return "Mac";
-        }
-        else if (osName.contains("Linux")) {
+        } else if (osName.contains("Linux")) {
             return "Linux";
-        }
-        else {
+        } else {
             return osName.replaceAll("\\W", "");
         }
     }
